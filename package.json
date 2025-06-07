@@ -1,0 +1,27 @@
+{
+  "name": "JimmyCarter",
+  "version": "1.0.0",
+  "description": "The 39th president of the United States of America",
+  "main": "index.ts",
+  "repository": "https://github.com/arthurwb/JimmyCarter.git",
+  "author": "Brooks <brooksarthur07@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsup src/index.ts --minify"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
