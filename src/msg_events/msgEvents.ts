@@ -6,19 +6,6 @@ import * as Dice from "../util/dice"
 export const msgEvents = (msg: Message): void => {
     const msgLower = msg.content.toLowerCase();
 
-    // ---- PROFANITY CHECK ----
-    const containsProfanity = profanityList.profanity.some(word => {
-        const regex = new RegExp(`\\b${word}\\b`, 'i'); // word-boundary safe
-        return regex.test(msgLower);
-    });
-
-    if (containsProfanity) {
-        if (msg.channel instanceof TextChannel) {
-            msg.channel.send("⚠️ TEST: Profanity detected");
-        }
-        return; // stop further processing
-    }
-
     // ---- EXISTING LOGIC ----
     if (["peanut", "peanuts"].some(word => msgLower.includes(word))) {
         const res = responses["peanut"][Math.floor(Math.random() * (responses["peanut"].length))];

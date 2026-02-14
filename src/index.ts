@@ -1,5 +1,5 @@
 import 'dotenv/config'; // initializes dotenv
-import { Client, GatewayIntentBits, Events, Message, ShardClientUtil } from 'discord.js';
+import { Client, GatewayIntentBits, Events, Message, ShardClientUtil, TextChannel } from 'discord.js';
 
 import { commands } from './commands/commands';
 import { msgEvents } from './msg_events/msgEvents';
@@ -27,33 +27,39 @@ client.once(Events.ClientReady, () => {
 
 // Handle incoming messages
 client.on(Events.MessageCreate, (msg: Message) => {
-    if (msg.author.bot) return; // make sure the bot doesnt respond to itself
-    const msg_lower = msg.content.toLocaleLowerCase();
+    if (msg.author.bot) return;
 
+    const msg_lower = msg.content.toLowerCase();
+
+    // ---------- PROFANITY DETECTION ----------
+    const list = profanity["profanity"];
+    const matchedWords: string[] = [];
+
+    for (const word of list) {
+        const regex = new RegExp(`\\b${word}\\b`, 'i'); // word-safe
+        if (regex.test(msg_lower)) {
+            matchedWords.push(word);
+        }
+    }
+
+    if (matchedWords.length > 0) {
+        if (msg.channel instanceof TextChannel) {
+            msg.channel.send("⚠️ TEST: Profanity detected");
+        }
+
+        checkAndLogWords(msg, matchedWords);
+        return; // ⛔ stops ALL further processing
+    }
+
+    // ---------- TRIGGERS ----------
     const jimmyTriggers = triggers["triggers"];
     if (jimmyTriggers.some(trigger => msg_lower.includes(trigger))) {
         msgEvents(msg);
     }
 
+    // ---------- COMMANDS ----------
     if (msg_lower.startsWith('!')) {
         commands(msg);
-    }
-
-    const list = profanity["profanity"];
-    const matchedWords: string[] = [];
-
-    list.forEach(word => {
-        const regex = new RegExp(`\\b${word}\\b`, 'gi');
-        const matches = msg_lower.match(regex);
-        if (matches && matches.length > 0) {
-            for (let i = 0; i < matches.length; i++) {
-                matchedWords.push(word);
-            }
-        }
-    });
-
-    if (matchedWords.length > 0) {
-        checkAndLogWords(msg, matchedWords);
     }
 });
 
