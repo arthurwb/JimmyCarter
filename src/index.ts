@@ -38,8 +38,7 @@ client.on(Events.MessageCreate, (msg: Message) => {
     const matchedWords: string[] = [];
 
     for (const word of list) {
-        const regex = new RegExp(`\\b${word}\\b`, 'i'); // word-safe
-        if (regex.test(msg_lower)) {
+        if (msg_lower.includes(word)) {
             matchedWords.push(word);
         }
     }
