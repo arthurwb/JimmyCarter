@@ -1,24 +1,43 @@
 import { Message, TextChannel } from 'discord.js';
-import responses from '../../responses/responses.json' assert { type: 'json' };
+import responses from '../../responses/responses.json' with { type: 'json' };
+import profanityList from '../../responses/profanity.json' with { type: 'json' };
 import * as Dice from "../util/dice"
 
 export const msgEvents = (msg: Message): void => {
-    const msgLower = msg.content.toLowerCase()
+    const msgLower = msg.content.toLowerCase();
+
+    // ---- PROFANITY CHECK ----
+    const containsProfanity = profanityList.profanity.some(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'i'); // word-boundary safe
+        return regex.test(msgLower);
+    });
+
+    if (containsProfanity) {
+        if (msg.channel instanceof TextChannel) {
+            msg.channel.send("⚠️ TEST: Profanity detected");
+        }
+        return; // stop further processing
+    }
+
+    // ---- EXISTING LOGIC ----
     if (["peanut", "peanuts"].some(word => msgLower.includes(word))) {
         const res = responses["peanut"][Math.floor(Math.random() * (responses["peanut"].length))];
         if (msg.channel instanceof TextChannel) {
             msg.channel.send(res)
         }
-    } else if (msgLower.includes("hey jimmy")) {
+    } 
+    else if (/hey.*jim/i.test(msgLower)) {
         const res = responses["hey-jimmy"][Math.floor(Math.random() * (responses["hey-jimmy"].length))];
         if (msg.channel instanceof TextChannel) {
             msg.channel.send(res)
         }
-    } else if (msgLower.includes("jimmy name")) {
+    } 
+    else if (/jim*name/i.test(msgLower)) {
         if (msg.channel instanceof TextChannel) {
             msg.channel.send("My name is James Earl Carter Jr. but you can call me Jimmy")
         }
-    } else {
+    } 
+    else {
         const yesOrNo = ["yes", "no"];
         if (msg.channel instanceof TextChannel) {
             const res = yesOrNo[Math.floor(Math.random() * 2)]

@@ -1,19 +1,33 @@
 import axios from "axios";
 import { Message, TextChannel } from "discord.js";
 
-import profanity from '../../responses/profanity.json' assert { type: 'json' };
+import profanity from '../../responses/profanity.json' with { type: 'json' };
+
+const BLOB_URL = 'http://jsonblob.com/api/jsonBlob/1381346616098873344';
+
+const is404 = (err: any) =>
+    axios.isAxiosError(err) && err.response?.status === 404;
 
 export const checkAndLogWords = async (msg: Message, profanity: string[]): Promise<void> => {
-    try {
-        const res = await axios.get('http://jsonblob.com/api/jsonBlob/1381346616098873344');
-        const data = res.data;
+    let data: any;
 
+    try {
+        const res = await axios.get(BLOB_URL);
+        data = res.data;
+    } catch (err) {
+        if (is404(err)) {
+            return;
+        }
+        console.error("Error fetching profanity data:", err);
+        return;
+    }
+
+    try {
         const authorId = msg.author.id;
         const channel = msg.channel;
 
-        if (!data.profanity[authorId]) {
-            data.profanity[authorId] = {};
-        }
+        if (!data.profanity) data.profanity = {};
+        if (!data.profanity[authorId]) data.profanity[authorId] = {};
 
         let shouldWarn = false;
 
@@ -29,32 +43,35 @@ export const checkAndLogWords = async (msg: Message, profanity: string[]): Promi
             }
         });
 
-        await axios.put('http://jsonblob.com/api/jsonBlob/1381346616098873344', data);
+        await axios.put(BLOB_URL, data);
 
-        if (shouldWarn) {
-            if (channel instanceof TextChannel) {
-                channel.send("Jimmy doesn't like it when people curse...");
-            }
+        if (shouldWarn && channel instanceof TextChannel) {
+            channel.send("Jimmy doesn't like it when people curse...");
         }
     } catch (err) {
-        console.error("Error fetching or updating profanity data:", err);
+        console.error("Error updating profanity data:", err);
     }
 };
 
 export const getWordCount = async (msg: Message): Promise<Record<string, number> | undefined> => {
+    let data: any;
+
     try {
-        const res = await axios.get('http://jsonblob.com/api/jsonBlob/1381346616098873344');
-        const data = res.data;
-
-        const authorId = msg.author.id;
-
-        if (!data.profanity[authorId]) {
-            data.profanity[authorId] = {};
-        }
-
-        return data.profanity[authorId];
+        const res = await axios.get(BLOB_URL);
+        data = res.data;
     } catch (err) {
+        if (is404(err)) {
+            // Blob doesn't exist → skip silently
+            return undefined;
+        }
         console.error("Error fetching profanity data:", err);
         return undefined;
     }
-}
+
+    const authorId = msg.author.id;
+
+    if (!data.profanity) data.profanity = {};
+    if (!data.profanity[authorId]) data.profanity[authorId] = {};
+
+    return data.profanity[authorId];
+};
