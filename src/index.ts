@@ -5,8 +5,10 @@ import { commands } from './commands/commands';
 import { msgEvents } from './msg_events/msgEvents';
 import { checkAndLogWords } from './util/profanityCounter';
 
-import profanity from '../responses/profanity.json' assert { type: 'json' };
-import triggers from '../responses/triggers.json' assert { type: 'json' };
+import profanity from '../responses/profanity.json' with { type: 'json' };
+import profanityRes from '../responses/profanity-responses.json' with { type: 'json' };
+import triggers from '../responses/triggers.json' with { type: 'json' };
+import { dice6 } from './util/dice';
 
 // Create a new Discord client
 const client = new Client({ 
@@ -43,8 +45,9 @@ client.on(Events.MessageCreate, (msg: Message) => {
     }
 
     if (matchedWords.length > 0) {
-        if (msg.channel instanceof TextChannel) {
-            msg.channel.send("⚠️ TEST: Profanity detected");
+        const res = profanityRes["profanity-responses"][Math.floor(Math.random() * (profanityRes["profanity-responses"].length))];
+        if (msg.channel instanceof TextChannel && dice6() == 1) {
+            msg.channel.send(res);
         }
 
         checkAndLogWords(msg, matchedWords);
