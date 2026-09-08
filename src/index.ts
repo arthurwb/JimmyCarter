@@ -45,7 +45,7 @@ client.on(Events.MessageCreate, (msg: Message) => {
 
     if (matchedWords.length > 0) {
         const res = profanityRes["profanity-responses"][Math.floor(Math.random() * (profanityRes["profanity-responses"].length))];
-        if (msg.channel instanceof TextChannel && dice6() == 1) {
+        if (msg.channel instanceof TextChannel && dice20() == 1) {
             msg.channel.send(res);
         }
 
