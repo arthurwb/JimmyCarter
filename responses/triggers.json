@@ -3,5 +3,12 @@
         "peanut",
         "jimmy", 
         "jim"
+    ],
+    "set_reminders": [
+        "jimmy remind me"
+    ],
+    "get_reminders": [
+        "jimmy whats going on?",
+        "jimmy what's going on?"
     ]
 }

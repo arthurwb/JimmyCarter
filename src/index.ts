@@ -11,8 +11,18 @@ import cron from 'node-cron';
 
 import profanity from '../responses/profanity.json' with { type: 'json' };
 import profanityRes from '../responses/profanity-responses.json' with { type: 'json' };
-import triggers from '../responses/triggers.json' with { type: 'json' };
 import { dice100, dice20, dice6 } from './util/dice';
+import { getReminder, setReminder } from './reminders/reminder';
+
+interface TriggerConfig {
+    triggers: string[];
+    set_reminders: string[];
+    get_reminders: string[];
+}
+
+import triggerConfig from '../responses/triggers.json' with { type: 'json' };
+
+const triggers = triggerConfig as TriggerConfig;
 
 // Create a new Discord client
 const client = new Client({ 
@@ -37,28 +47,28 @@ client.on(Events.MessageCreate, async (msg: Message) => {
 
     const msg_lower = msg.content.toLowerCase();
 
-    // ---------- PROFANITY DETECTION ----------
-    const list = profanity["profanity"];
-    const matchedWords: string[] = [];
+    // ---------- REMINDERS ----------
+    const set_reminders: string[] = triggers.set_reminders ?? [];
+    const get_reminders: string[] = triggers.get_reminders ?? [];
 
-    for (const word of list) {
-        if (msg_lower.includes(word)) {
-            matchedWords.push(word);
-        }
+    const matchedSetReminder = set_reminders.some((set_reminders) =>
+        msg_lower.toLowerCase().includes(set_reminders.toLowerCase())
+    );
+
+    if (matchedSetReminder) {
+        setReminder(msg);
     }
 
-    if (matchedWords.length > 0) {
-        const res = profanityRes["profanity-responses"][Math.floor(Math.random() * (profanityRes["profanity-responses"].length))];
-        if (msg.channel instanceof TextChannel && dice20() == 1) {
-            msg.channel.send(res);
-        }
+    const matchedGetReminder = get_reminders.some((get_reminders) =>
+        msg_lower.toLowerCase().includes(get_reminders.toLowerCase())
+    );
 
-        checkAndLogWords(msg, matchedWords);
-        return; // stops ALL further processing
+    if (matchedGetReminder) {
+        getReminder(msg);
     }
 
     // ---------- TRIGGERS ----------
-    const jimmyTriggers = triggers["triggers"];
+    const jimmyTriggers = triggers.triggers ?? [];;
     if (jimmyTriggers.some(trigger => msg_lower.includes(trigger))) {
         msgEvents(msg);
     }
@@ -66,23 +76,6 @@ client.on(Events.MessageCreate, async (msg: Message) => {
     // ---------- COMMANDS ----------
     if (msg_lower.startsWith('!')) {
         commands(msg);
-    }
-
-    if (dice100() == 1) {
-        if (msg.channel instanceof TextChannel) {
-            msg.channel.send("you have been afflicted...");
-            let user = msg.author.username;
-
-            setTimeout(3600000);
-
-            if (dice6() == 1) {
-                msg.channel.send(`${user} has unfortunatly passed away...`);
-                msg.channel.send({ files: ["https://www.politico.com/dims4/default/resize/630/quality/90/format/webp?url=https%3A%2F%2Fstatic.politico.com%2Fe1%2F84%2F1aac2b2548a5939c6880fed24760%2Fgettyimages-1313911789.jpeg"] });
-            } else {
-                msg.channel.send(`${user} is looking good, they are't sick anymore. Yay`);
-                msg.channel.send({ files: ["https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/rockcms/2023-02/230218-jimmy-carter-mjf-1542-3ab487.jpg"] });
-            }
-        }
     }
 });
 
