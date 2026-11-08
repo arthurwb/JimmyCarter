@@ -57,6 +57,7 @@ client.on(Events.MessageCreate, async (msg: Message) => {
 
     if (matchedSetReminder) {
         setReminder(msg);
+        return;
     }
 
     const matchedGetReminder = get_reminders.some((get_reminders) =>
@@ -65,17 +66,20 @@ client.on(Events.MessageCreate, async (msg: Message) => {
 
     if (matchedGetReminder) {
         getReminder(msg);
+        return;
+    }
+
+    // ---------- COMMANDS ----------
+    if (msg_lower.startsWith('!')) {
+        commands(msg);
+        return;
     }
 
     // ---------- TRIGGERS ----------
     const jimmyTriggers = triggers.triggers ?? [];;
     if (jimmyTriggers.some(trigger => msg_lower.includes(trigger))) {
         msgEvents(msg);
-    }
-
-    // ---------- COMMANDS ----------
-    if (msg_lower.startsWith('!')) {
-        commands(msg);
+        return;
     }
 });
 
