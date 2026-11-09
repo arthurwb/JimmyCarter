@@ -29,7 +29,7 @@ export function news(readyClient: Client<true>) {
 
             const news = getNews();
 
-            await channel.send(news);
+            await channel.send(await news);
 
             console.log('Daily noon event completed.');
 

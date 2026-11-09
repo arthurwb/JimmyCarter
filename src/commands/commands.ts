@@ -30,7 +30,7 @@ export const commands = async (msg: Message): Promise<void> =>  {
         msg.reply(res);
     } else if (msg.content === "!news") {
         if (msg.channel instanceof TextChannel) {
-            msg.channel.send(getNews());
+            msg.channel.send(await getNews());
         }
     }
 }
