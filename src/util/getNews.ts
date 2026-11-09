@@ -3,7 +3,7 @@ export async function getNews(): Promise<string> {
 
     await fetch('https://api.currentsapi.services/v1/latest-news?language=en&category=world', {
     headers: {
-        'Authorization': 'Bearer YOUR_API_KEY'
+        'Authorization': `Bearer ${key}`
     }
     })
     .then(response => response.json())
