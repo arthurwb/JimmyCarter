@@ -1,10 +1,11 @@
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client } from 'discord.js';
 import cron from 'node-cron';
 
 import { getNews } from '../util/getNews';
+import newsJSON from '../../responses/news.json';
 
-export function news(readyClient: Client<true>) {
-    console.log(`Logged in as ${readyClient.user.tag}!`);
+export function news(readyClient: Client<true>): void {
+    console.log(`Initializing news scheduler for ${readyClient.user.tag}`);
 
     const reminderChannelId = process.env.REMINDER_CHANNEL_ID;
 
@@ -17,19 +18,22 @@ export function news(readyClient: Client<true>) {
         try {
             const channel = await readyClient.channels.fetch(reminderChannelId);
 
-            if (!channel) {
-                console.error('Reminder channel not found.');
+            if (!channel || !channel.isTextBased() || !('send' in channel)) {
+                console.error('Reminder channel not found or cannot send messages.');
                 return;
             }
 
-            if (!channel.isTextBased() || !('send' in channel)) {
-                console.error('Reminder channel is not a text channel.');
-                return;
-            }
+            const newsHeadline = await getNews();
 
-            const news = getNews();
+            const endings = newsJSON.news;
 
-            await channel.send(await news);
+            const ending = endings[
+                Math.floor(Math.random() * endings.length)
+            ];
+
+            await channel.send(
+                `I just read an article titled "${newsHeadline}". ${ending}`
+            );
 
             console.log('Daily noon event completed.');
 
@@ -40,4 +44,6 @@ export function news(readyClient: Client<true>) {
     }, {
         timezone: 'America/New_York'
     });
+
+    console.log('News scheduler initialized. Runs daily at noon.');
 }

@@ -21,6 +21,7 @@ interface TriggerConfig {
 }
 
 import triggerConfig from '../responses/triggers.json' with { type: 'json' };
+import { news } from './reminders/news';
 
 const triggers = triggerConfig as TriggerConfig;
 
@@ -35,10 +36,10 @@ const client = new Client({
 });
 
 // When the bot is ready
-client.once(Events.ClientReady, () => {
-    if (client.user) {
-        console.log(`Logged in as ${client.user.tag}!`);
-    }
+client.once(Events.ClientReady, (readyClient) => {
+    console.log(`Logged in as ${readyClient.user.tag}!`);
+
+    news(readyClient);
 });
 
 // Handle incoming messages
@@ -51,8 +52,8 @@ client.on(Events.MessageCreate, async (msg: Message) => {
     const set_reminders: string[] = triggers.set_reminders ?? [];
     const get_reminders: string[] = triggers.get_reminders ?? [];
 
-    const matchedSetReminder = set_reminders.some((set_reminders) =>
-        msg_lower.toLowerCase().includes(set_reminders.toLowerCase())
+    const matchedSetReminder = set_reminders.some(trigger =>
+        msg_lower.includes(trigger.toLowerCase())
     );
 
     if (matchedSetReminder) {
@@ -60,8 +61,8 @@ client.on(Events.MessageCreate, async (msg: Message) => {
         return;
     }
 
-    const matchedGetReminder = get_reminders.some((get_reminders) =>
-        msg_lower.toLowerCase().includes(get_reminders.toLowerCase())
+    const matchedGetReminder = get_reminders.some(trigger =>
+        msg_lower.includes(trigger.toLowerCase())
     );
 
     if (matchedGetReminder) {
@@ -76,16 +77,12 @@ client.on(Events.MessageCreate, async (msg: Message) => {
     }
 
     // ---------- TRIGGERS ----------
-    const jimmyTriggers = triggers.triggers ?? [];;
+    const jimmyTriggers = triggers.triggers ?? [];
+
     if (jimmyTriggers.some(trigger => msg_lower.includes(trigger))) {
         msgEvents(msg);
         return;
     }
-
-    // ----------- EVENTS ------------
-    client.once(Events.ClientReady, async (readyClient) => {
-        
-    });
 });
 
 // Login with token
