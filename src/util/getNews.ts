@@ -11,5 +11,5 @@ export function getNews(): string {
         return data.news[0].title;
     });
 
-    return ""
+    return "No news today..."
 }
