@@ -2,10 +2,7 @@
     "triggers": [
         "peanut",
         "jimmy", 
-        "jim",
-        "fuck",
-        "shit",
-        "heck"
+        "jim"
     ],
     "set_reminders": [
         "jimmy remind me"

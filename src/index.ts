@@ -9,9 +9,9 @@ import { setTimeout } from 'node:timers/promises';
 
 import cron from 'node-cron';
 
-import profanity from '../responses/profanity.json' with { type: 'json' };
-import profanityRes from '../responses/profanity-responses.json' with { type: 'json' };
-import { dice100, dice20, dice6 } from './util/dice';
+import profanity_responses from '../responses/profanity_responses.json' with { type: 'json' };
+import profanityList from '../responses/profanity.json' with { type: 'json' };
+import { dice100, dice20, dice6, dice12 } from './util/dice';
 import { getReminder, setReminder } from './reminders/reminder';
 
 interface TriggerConfig {
@@ -83,6 +83,14 @@ client.on(Events.MessageCreate, async (msg: Message) => {
         msgEvents(msg);
         return;
     }
+
+    if (profanityList["profanity"].some(word => msg_lower.includes(word)) && dice12() == 0) {
+        const res = profanity_responses["profanity_responses"][Math.floor(Math.random() * (profanity_responses["profanity_responses"].length))];
+        if (msg.channel instanceof TextChannel) {
+            msg.channel.send(res)
+        }
+        return;
+    } 
 });
 
 // Login with token
