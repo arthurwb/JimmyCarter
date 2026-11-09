@@ -81,6 +81,11 @@ client.on(Events.MessageCreate, async (msg: Message) => {
         msgEvents(msg);
         return;
     }
+
+    // ----------- EVENTS ------------
+    client.once(Events.ClientReady, async (readyClient) => {
+        
+    });
 });
 
 // Login with token

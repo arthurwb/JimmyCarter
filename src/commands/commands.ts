@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Message, TextChannel } from 'discord.js';
 
 import { getWordCount } from '../util/profanityCounter';
+import { getNews } from '../util/getNews';
 
 export const commands = async (msg: Message): Promise<void> =>  {
     if (msg.content === '!dog') {
@@ -27,5 +28,9 @@ export const commands = async (msg: Message): Promise<void> =>  {
             }
         }
         msg.reply(res);
+    } else if (msg.content === "!news") {
+        if (msg.channel instanceof TextChannel) {
+            msg.channel.send(getNews());
+        }
     }
 }
