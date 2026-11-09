@@ -10,6 +10,7 @@ export async function getNews(): Promise<string> {
     .then(data => {
         console.log("news fetched");
         console.log(data);
+        console.log(data.news[0].title);
         return data.news[0].title;
     });
 
