@@ -1,5 +1,5 @@
 export async function getNews(): Promise<string> {
-    const key = process.env.NEW_API;
+    const key = process.env.NEWS_API;
 
     await fetch('https://api.currentsapi.services/v1/latest-news?language=en&category=world', {
     headers: {
