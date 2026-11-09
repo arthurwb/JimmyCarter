@@ -41,7 +41,7 @@ export async function getNews(): Promise<string> {
             return "No news today...";
         }
 
-        const article = data.news[0];
+        const article = data.news[Math.random() * 10];
 
         console.log("Top headline:", article.title);
 
