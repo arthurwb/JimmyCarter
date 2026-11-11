@@ -1,0 +1,53 @@
+{
+  "temp": {
+    "_comment": "Looks like it going to be [day temp] today then its gonna be [night temp] tonight.",
+    "danger_cold": [
+      "like actually dangeriouly cold"
+    ],
+    "very_cold": [
+      "cold as shit"
+    ],
+    "cold": [
+      "kinda cold"
+    ],
+    "normal": [
+      "nice and normal"
+    ],
+    "hot": [
+      "good peanut growing weather"
+    ],
+    "very_hot": [
+      "hot as balls"
+    ],
+    "danger_hot": [
+      "like actually dangeriouly hot"
+    ],
+    "misc": [
+      "scary"
+    ]
+  },
+  "precip": {
+    "_commnet": "Looks like its going to [comment] today.",
+    "Thunderstorm": [
+      "thunder"
+    ],
+    "Drizzle": [
+      "rain just a little"
+    ],
+    "Rain": [
+      "rain"
+    ],
+    "Snow": [
+      "snow (yay!)"
+    ],
+    "Clear": [
+      "be completely normal with no issues at all"
+    ],
+    "Clouds": [
+      "be a little cloudy"
+    ],
+    "misc": [
+      "be scary"
+    ]
+  }
+}
