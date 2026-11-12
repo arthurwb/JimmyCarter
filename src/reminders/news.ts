@@ -14,7 +14,7 @@ export function news(readyClient: Client<true>): void {
         return;
     }
 
-    cron.schedule('12 15 * * *', async () => {
+    cron.schedule('18 15 * * *', async () => {
         try {
             const channel = await readyClient.channels.fetch(reminderChannelId);
 
@@ -25,7 +25,7 @@ export function news(readyClient: Client<true>): void {
 
             const newsHeadline = await getNews();
 
-            const endings = newsJSON.news;
+            const endings = newsJSON.endings;
 
             console.log(endings);
 
