@@ -27,17 +27,13 @@ export function news(readyClient: Client<true>): void {
 
             const endings = newsJSON.endings;
 
-            console.log(endings);
-
             const ending = endings[
                 Math.floor(Math.random() * endings.length)
             ];
 
-            //await channel.send(
-            //    `I just read an article titled "${newsHeadline}". ${ending}`
-            //);
-
-            console.log(newsHeadline);
+            await channel.send(
+               `I just read an article titled "${newsHeadline}". ${ending}`
+            );
 
             console.log('Daily noon event completed.');
 
