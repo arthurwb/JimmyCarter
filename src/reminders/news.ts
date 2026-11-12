@@ -28,7 +28,7 @@ export function news(readyClient: Client<true>): void {
             const endings = newsJSON.news;
 
             const ending = endings[
-                Math.floor(Math.random() * endings.length)
+                Math.floor(Math.random() * endings.length())
             ];
 
             await channel.send(
