@@ -22,6 +22,7 @@ interface TriggerConfig {
 
 import triggerConfig from '../responses/triggers.json' with { type: 'json' };
 import { news } from './reminders/news';
+import { weather } from './reminders/weather';
 
 const triggers = triggerConfig as TriggerConfig;
 
@@ -40,6 +41,7 @@ client.once(Events.ClientReady, (readyClient) => {
     console.log(`Logged in as ${readyClient.user.tag}!`);
 
     news(readyClient);
+    weather(readyClient);
 });
 
 // Handle incoming messages
