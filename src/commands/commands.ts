@@ -3,6 +3,7 @@ import { Message, TextChannel } from 'discord.js';
 
 import { getWordCount } from '../util/profanityCounter';
 import { getNews } from '../util/getNews';
+import { getWeather } from '../util/getWeather';
 
 export const commands = async (msg: Message): Promise<void> =>  {
     if (msg.content === '!dog') {
@@ -31,6 +32,11 @@ export const commands = async (msg: Message): Promise<void> =>  {
     } else if (msg.content === "!news") {
         if (msg.channel instanceof TextChannel) {
             msg.channel.send(await getNews());
+        }
+    } else if (msg.content === "!weather") {
+        if (msg.channel instanceof TextChannel) {
+            const weather = await getWeather()
+            msg.channel.send(`Day tempurature: ${weather.day} | Night tempurature: ${weather.night} | Weather: ${weather.conditions}`);
         }
     }
 }
