@@ -113,7 +113,8 @@ async function sendWeatherUpdate(client: Client<true>): Promise<void> {
         const weatherData = await getWeather();
         const message = formatWeatherMessage(weatherData);
 
-        await channel.send(message);
+        // await channel.send(message);
+        console.log(message);
 
         console.log('Daily weather event completed.');
     } catch (error: unknown) {
