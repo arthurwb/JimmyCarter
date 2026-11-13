@@ -26,7 +26,7 @@ type PrecipitationCategory =
 
 // Configuration
 const TIMEZONE = 'America/New_York';
-const SCHEDULE = '4 9 * * *';
+const SCHEDULE = '16 9 * * *';
 
 const TEMPERATURE_THRESHOLDS: {
     max: number;
@@ -88,8 +88,7 @@ function formatWeatherMessage(weatherData: {
     const precipitationResponse = getPrecipitationResponse(
         weatherData.conditions
     );
-
-    return `${dayResponse} | ${nightResponse} | ${precipitationResponse}`;
+	return `Looks like its gonna be ${dayResponse} today and then ${nightResponse} tonight. Also, it looks like its going to ${precipitationResponse} today.`
 }
 
 // Discord
@@ -114,7 +113,7 @@ async function sendWeatherUpdate(client: Client<true>): Promise<void> {
         const message = formatWeatherMessage(weatherData);
 
         // await channel.send(message);
-        console.log(message);
+		console.log(message);
 
         console.log('Daily weather event completed.');
     } catch (error: unknown) {
