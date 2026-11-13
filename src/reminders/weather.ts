@@ -26,7 +26,7 @@ type PrecipitationCategory =
 
 // Configuration
 const TIMEZONE = 'America/New_York';
-const SCHEDULE = '16 9 * * *';
+const SCHEDULE = '30 9 * * *';
 
 const TEMPERATURE_THRESHOLDS: {
     max: number;
@@ -112,7 +112,7 @@ async function sendWeatherUpdate(client: Client<true>): Promise<void> {
         const weatherData = await getWeather();
         const message = formatWeatherMessage(weatherData);
 
-        // await channel.send(message);
+        await channel.send(message);
 		console.log(message);
 
         console.log('Daily weather event completed.');
