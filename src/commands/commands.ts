@@ -38,7 +38,8 @@ export const commands = async (msg: Message): Promise<void> =>  {
             const weather = await getWeather();
             let formattedWeather = "_ _";
             weather.temps.forEach((_, index) => {
-                formattedWeather = formattedWeather + `\n${weather.times[index].split(" ")[1]}: ${weather.temps[index]}\u00B0F | ${weather.conditions[index]}`
+                const times = weather.times[index].split(" ");
+                formattedWeather = formattedWeather + `\n${times[1]} ${times[2]}: ${weather.temps[index]}\u00B0F | ${weather.conditions[index]}`
             })
             msg.channel.send(formattedWeather);
         }
