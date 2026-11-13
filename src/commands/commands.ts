@@ -36,7 +36,7 @@ export const commands = async (msg: Message): Promise<void> =>  {
     } else if (msg.content === "!weather") {
         if (msg.channel instanceof TextChannel) {
             const weather = await getWeather()
-            msg.channel.send(`${weather.temps} | Weather: ${weather.conditions}`);
+            msg.channel.send(`24 Hour temps (3 hour groups): ${weather.temps} | Weather: ${weather.conditions}`);
         }
     }
 }
