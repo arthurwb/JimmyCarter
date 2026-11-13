@@ -7,6 +7,7 @@ interface Hour {
 
 interface Daily {
     temps: number[];
+    times: string[];
     day: number;
     night: number;
     conditions: string[];
@@ -84,6 +85,10 @@ function processWeather(data: WeatherApiResponse): Daily {
         hour => Math.floor(hour.main.temp)
     );
 
+    const allTimes = data.list.flatMap(
+        hour => hour.dt_txt
+    );
+
     const dayTemp = Math.max(
         ...dayForecast.map(hour => hour.main.temp)
     );
@@ -98,6 +103,7 @@ function processWeather(data: WeatherApiResponse): Daily {
 
     return {
         temps: allTemp,
+        times: allTimes,
         day: dayTemp,
         night: nightTemp,
         conditions
