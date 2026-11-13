@@ -26,7 +26,7 @@ type PrecipitationCategory =
 
 // Configuration
 const TIMEZONE = 'America/New_York';
-const SCHEDULE = '0 9 * * *';
+const SCHEDULE = '4 9 * * *';
 
 const TEMPERATURE_THRESHOLDS: {
     max: number;
