@@ -36,9 +36,10 @@ export const commands = async (msg: Message): Promise<void> =>  {
     } else if (msg.content === "!weather") {
         if (msg.channel instanceof TextChannel) {
             const weather = await getWeather();
+            const currentHour: number = new Date().getHours(); 
             let formattedWeather = "_ _";
             weather.temps.forEach((_, index) => {
-                formattedWeather = formattedWeather + `\nHours ${((index+1)*3)-3}-${(index+1)*3}: ${weather.temps[index]} | ${weather.conditions[index]}`
+                formattedWeather = formattedWeather + `\nHours ${(((index+1)*3)-3)+currentHour}:00-${((index+1)*3)+currentHour}:00: ${weather.temps[index]}\u00B0F | ${weather.conditions[index]}`
             })
             msg.channel.send(formattedWeather);
         }
