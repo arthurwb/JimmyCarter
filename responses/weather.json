@@ -1,6 +1,6 @@
 {
   "temp": {
-    "_comment": "Looks like it going to be [day temp] today then its gonna be [night temp] tonight.",
+    "_comment": "Looks like it going to be [day temp] today then [night temp] tonight.",
     "danger_cold": [
       "like actually dangeriouly cold"
     ],
@@ -27,7 +27,7 @@
     ]
   },
   "precip": {
-    "_commnet": "Looks like its going to [comment] today.",
+    "_commnet": "Also, it looks like its going to [comment] today.",
     "Thunderstorm": [
       "thunder"
     ],
