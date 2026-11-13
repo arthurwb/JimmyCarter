@@ -86,7 +86,18 @@ function processWeather(data: WeatherApiResponse): Daily {
     );
 
     const allTimes = data.list.flatMap(
-        hour => hour.dt_txt
+        (hour) => {
+            const formatDate = new Date(hour.dt_txt.replace(" ", "T")+"Z");
+            return formatDate.toLocaleString("en-US", {
+                timeZone: "America/New_York",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            });
+        }
     );
 
     const dayTemp = Math.max(
