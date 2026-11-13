@@ -75,27 +75,16 @@ async function fetchWeather(): Promise<WeatherApiResponse | null> {
 
 // Processing
 
-function calculateAverage(temperatures: number[]): number {
-    if (temperatures.length === 0) return 0;
-
-    const total = temperatures.reduce(
-        (sum, temp) => sum + temp,
-        0
-    );
-
-    return total / temperatures.length;
-}
-
 function processWeather(data: WeatherApiResponse): Daily {
     const dayForecast = data.list.slice(0, DAY_HOURS);
     const nightForecast = data.list.slice(DAY_HOURS);
 
-    const dayTemp = calculateAverage(
-        dayForecast.map(hour => hour.main.temp)
+    const dayTemp = Math.max(
+        ...dayForecast.map(hour => hour.main.temp)
     );
 
-    const nightTemp = calculateAverage(
-        nightForecast.map(hour => hour.main.temp)
+    const nightTemp = Math.min(
+        ...nightForecast.map(hour => hour.main.temp)
     );
 
     const conditions = data.list.flatMap(
