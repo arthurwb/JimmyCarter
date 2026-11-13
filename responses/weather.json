@@ -2,16 +2,43 @@
   "temp": {
     "_comment": "Looks like it going to be [day temp] today then [night temp] tonight.",
     "danger_cold": [
-      "like actually dangeriouly cold"
+      "like actually dangeriouly cold",
+	  "*dies*",
+	  "FUCK"
     ],
     "very_cold": [
-      "cold as shit"
+      "cold as shit",
+	  "fucking cold",
+	  "cold like the peanut",
+	  "crisp",
+	  "scary",
+	  "funny",
+	  "*shivers...* ough... so cold...",
+	  "FUCKING VERY COLD"
     ],
     "cold": [
-      "kinda cold"
+      "kinda cold",
+	    "cold",
+	    "chilly",
+	    "a bit cold",
+	    "some bad peanut growing weather",
+	    "a shrivler",
+	    "a real shrinker",
+	    "the type of weather that really makes your bits contract",
+	    "not too bad out",
+	    "a certain way",
+	    "one of those days",
+	    "one of those nights",
+	    "*shivers*",
+	    "scary",
+	    "COLD"
     ],
     "normal": [
-      "nice and normal"
+      "nice and normal",
+	    "perfectly normal",
+	    "nice out",
+	    "*slips of banana peel*",
+	    "scary"
     ],
     "hot": [
       "good peanut growing weather"
@@ -20,7 +47,8 @@
       "hot as balls"
     ],
     "danger_hot": [
-      "like actually dangeriouly hot"
+      "like actually dangeriouly hot",
+	    "*dies*"
     ],
     "misc": [
       "scary"
@@ -29,22 +57,32 @@
   "precip": {
     "_commnet": "Also, it looks like its going to [comment] today.",
     "Thunderstorm": [
-      "thunder"
+      "thunder",
+	    "get scary",
+	    "*lightning strikes* what the fuck was that? I'm staying the fuck inside"
     ],
     "Drizzle": [
-      "rain just a little"
+      "rain just a little",
+	    "be the drizzler",
+	    "kinda rain",
+	    "maybe rain a bit"
     ],
     "Rain": [
-      "rain"
+      "rain",
+	    "be a bit rainy"
     ],
     "Snow": [
-      "snow (yay!)"
+      "snow (yay!)",
+	    "be snowy"
     ],
     "Clear": [
-      "be completely normal with no issues at all"
+      "be completely normal with no issues at all",
+	    "be a boring day",
+	    "... uh... I forgot... my brain no work"
     ],
     "Clouds": [
-      "be a little cloudy"
+      "be a little cloudy",
+	    "be a bit cloudy I guess"
     ],
     "misc": [
       "be scary"
