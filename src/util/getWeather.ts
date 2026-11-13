@@ -80,7 +80,9 @@ function processWeather(data: WeatherApiResponse): Daily {
     const dayForecast = data.list.slice(0, DAY_HOURS);
     const nightForecast = data.list.slice(DAY_HOURS);
 
-    const allTemp = Math.floor(data.list.slice().map(hour => hour.main.temp));
+    const allTemp = data.list.flatMap(
+        hour => Math.floor(hour.main.temp)
+    );
 
     const dayTemp = Math.max(
         ...dayForecast.map(hour => hour.main.temp)
