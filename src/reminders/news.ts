@@ -35,9 +35,10 @@ export function news(readyClient: Client<true>): void {
                 await channel.send(
                    `I just read an article titled "${newsHeadline}". ${ending}`
                 );
+                console.log('Daily noon event completed.');
+            } else {
+                console.log('News skipped today.');
             }
-
-            console.log('Daily noon event completed.');
 
         } catch (error: unknown) {
             console.error('Daily event failed:', error);
