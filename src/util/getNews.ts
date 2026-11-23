@@ -47,7 +47,7 @@ export async function getNews(): Promise<string> {
         );
 
         if (!response.ok) {
-            throw new Error(`News API error: ${response.status}`);
+            throw new Error(`News API error: ${response.status} | From category: ${randomItem}`);
         }
 
         const data: NewsApiResponse = await response.json();
