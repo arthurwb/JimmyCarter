@@ -11,6 +11,17 @@ interface NewsApiResponse {
     news: NewsArticle[];
 }
 
+const categories = {
+    entertainments: 2,
+    world: 1,
+    opinion: 1,
+    food: 2,
+    game: 5,
+    science: 3,
+    programming: 2,
+    academia: 1
+};
+
 export async function getNews(): Promise<string> {
     const key = process.env.NEWS_API;
 
@@ -20,8 +31,14 @@ export async function getNews(): Promise<string> {
     }
 
     try {
+        const entries = Object.entries(categories);
+        const totalWeight = entries.reduce((sum, [, weight]) => sum + weight, 0);
+        
+        let random = Math.random() * totalWeight;
+        
+        const randomItem = entries.find(([, weight]) => (random -= weight) < 0)?.[0];
         const response = await fetch(
-            'https://api.currentsapi.services/v1/latest-news?language=en&category=world',
+            `https://api.currentsapi.services/v1/latest-news?language=en&category=${randomItem}`,
             {
                 headers: {
                     'Authorization': `Bearer ${key}`
