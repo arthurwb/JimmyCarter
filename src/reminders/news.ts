@@ -31,9 +31,11 @@ export function news(readyClient: Client<true>): void {
                 Math.floor(Math.random() * endings.length)
             ];
 
-            await channel.send(
-               `I just read an article titled "${newsHeadline}". ${ending}`
-            );
+            if (Math.random() < 0.5) {
+                await channel.send(
+                   `I just read an article titled "${newsHeadline}". ${ending}`
+                );
+            }
 
             console.log('Daily noon event completed.');
 
