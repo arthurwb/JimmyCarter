@@ -12,11 +12,11 @@ interface NewsApiResponse {
 }
 
 const categories = {
-    entertainments: 2,
+    entertainment: 2,
     world: 1,
     opinion: 1,
     food: 2,
-    game: 5,
+    game: 3,
     science: 3,
     programming: 2,
     academia: 1
