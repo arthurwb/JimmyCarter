@@ -73,6 +73,9 @@ function getPrecipitationResponse(
                 PRECIPITATION_PRIORITY[b] - PRECIPITATION_PRIORITY[a]
         )[0] as PrecipitationCategory | undefined;
 
+	if (!precipitation) {
+		return `OBJECT: ${conditions}`
+	}
     return randomResponse(
         weatherJSON.precip[precipitation ?? 'misc']
     );
